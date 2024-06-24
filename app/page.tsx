@@ -1,4 +1,13 @@
-import BubbleSort from "./algorithms/BubbleSortComp";
+"use client";
+
+import SortViz from "./algorithms/SortViz";
+import bubbleSort from "./algorithms/bubblesort";
+import selSort from "./algorithms/selectionsort";
 export default function Home() {
-  return <BubbleSort />;
+  return (
+    <div>
+      <SortViz sortFunc={bubbleSort} />
+      <SortViz sortFunc={selSort} />
+    </div>
+  );
 }
