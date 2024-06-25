@@ -1,7 +1,3 @@
-interface Context {
-  snapshots: Snapshots;
-}
-
 interface Snapshots {
   before: number[];
   after: number[];
@@ -9,14 +5,16 @@ interface Snapshots {
   rightChildren?: Snapshots;
 }
 
-const mergeSort = (arr: number[]): { sorted: number[]; ctx: Context } => {
+const mergeSort = (
+  arr: number[]
+): { sorted: number[]; snapshots: Snapshots } => {
   if (arr.length < 2)
-    return { sorted: arr, ctx: { snapshots: { before: arr, after: arr } } };
+    return { sorted: arr, snapshots: { before: arr, after: arr } };
 
-  const { sorted: sortedL, ctx: leftctx } = mergeSort(
+  const { sorted: sortedL, snapshots: leftSnapshots } = mergeSort(
     arr.slice(0, arr.length / 2)
   );
-  const { sorted: sortedR, ctx: rightctx } = mergeSort(
+  const { sorted: sortedR, snapshots: rightSnapshots } = mergeSort(
     arr.slice(arr.length / 2)
   );
 
@@ -40,25 +38,15 @@ const mergeSort = (arr: number[]): { sorted: number[]; ctx: Context } => {
   snapshot.after = ret;
   return {
     sorted: ret,
-    ctx: {
-      snapshots: {
-        before: arr,
-        after: ret,
-        leftChildren: leftctx.snapshots,
-        rightChildren: rightctx.snapshots
-      }
+    snapshots: {
+      before: arr,
+      after: ret,
+      leftChildren: leftSnapshots,
+      rightChildren: rightSnapshots
     }
   };
 };
 
 export default mergeSort;
 
-console.log(
-  JSON.stringify(
-    mergeSort([
-      4, 1, 5, 23, 61, 1, 1, 2, 45, 1, 51, 2, 4, 5, 32, 1, 6, 34, 214, 52, 23
-    ]),
-    undefined,
-    1
-  )
-);
+console.log(JSON.stringify(mergeSort([6, 34, 214, 52, 23]), undefined, 1));
