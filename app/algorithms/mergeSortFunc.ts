@@ -1,23 +1,16 @@
-interface Snapshots {
+export interface Snapshot {
   before: number[];
   after: number[];
-  leftChildren?: Snapshots;
-  rightChildren?: Snapshots;
+  leftChildren?: Snapshot;
+  rightChildren?: Snapshot;
 }
 
-const mergeSort = (
-  arr: number[]
-): { sorted: number[]; snapshots: Snapshots } => {
-  if (arr.length < 2)
-    return { sorted: arr, snapshots: { before: arr, after: arr } };
+const mergeSort = (arr: number[]): Snapshot => {
+  if (arr.length < 2) return { before: arr, after: arr };
 
-  const { sorted: sortedL, snapshots: leftSnapshots } = mergeSort(
-    arr.slice(0, arr.length / 2)
-  );
-  const { sorted: sortedR, snapshots: rightSnapshots } = mergeSort(
-    arr.slice(arr.length / 2)
-  );
-
+  const leftSnapshots = mergeSort(arr.slice(0, arr.length / 2));
+  const rightSnapshots = mergeSort(arr.slice(arr.length / 2));
+  const [sortedL, sortedR] = [leftSnapshots.after, rightSnapshots.after];
   const ret = [];
   let snapshot = {
     before: arr,
@@ -37,13 +30,10 @@ const mergeSort = (
 
   snapshot.after = ret;
   return {
-    sorted: ret,
-    snapshots: {
-      before: arr,
-      after: ret,
-      leftChildren: leftSnapshots,
-      rightChildren: rightSnapshots
-    }
+    before: arr,
+    after: ret,
+    leftChildren: leftSnapshots,
+    rightChildren: rightSnapshots
   };
 };
 
