@@ -1,7 +1,18 @@
 const shouldSwap = (a: number, b: number) => a > b;
 
+interface HistorySnapshot {
+  sorted: number[];
+  comparisons: number;
+  swaps: number;
+}
+const createHistorySnapshot = (
+  sorted: number[],
+  comparisons: number,
+  swaps: number
+) => ({ sorted: sorted, comparisons: comparisons, swaps: swaps });
 const bubbleSort = (arr: number[]) => {
   const sorted = [...arr];
+  const comparisons = 0;
   const history: number[][] = [[...sorted]];
   while (true) {
     const nextSwapSpot = sorted.findIndex(
