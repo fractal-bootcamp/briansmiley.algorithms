@@ -1,4 +1,11 @@
-import BubbleSort from "./algorithms/BubbleSortComp";
+"use client";
+
+import Sorts from "./components/Sorts";
+
 export default function Home() {
-  return <BubbleSort />;
+  return (
+    <div>
+      <Sorts />
+    </div>
+  );
 }

@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { scrambled } from "./utils";
-import { isSorted, bubbleOneStep } from "./bubblesort";
+import { scrambled, isSorted } from "./utils";
 const sampleArray = Array.from({ length: 15 }, (_, idx) => idx);
-
-export default function BubbleSort() {
-  const [arr, setArr] = useState(scrambled(sampleArray));
-  useEffect(() => {
-    if (isSorted(arr)) return;
-    setTimeout(() => setArr(arr => bubbleOneStep(arr)), 100);
-  }, [arr]);
+const scrambledArray = scrambled(sampleArray);
+interface SortVizProps {
+  sortFunc: (arr: number[], callback: (arr: number[]) => void) => number[];
+}
+export default function SortViz({ sortFunc }: SortVizProps) {
+  const [arr, setArr] = useState(scrambledArray);
+  useEffect(() => {}, []);
   return (
     <div className="flex justify-start items-end">
       {arr.map(val => (
