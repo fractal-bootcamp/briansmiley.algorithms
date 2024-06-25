@@ -1,8 +1,8 @@
 const shouldSwap = (a: number, b: number) => a > b;
 
 const bubbleSort = (arr: number[]) => {
-  const history: number[][] = [];
   const sorted = [...arr];
+  const history: number[][] = [[...sorted]];
   while (true) {
     const nextSwapSpot = sorted.findIndex(
       (val, idx, arr) => val > arr[idx + 1]
@@ -19,7 +19,7 @@ const bubbleSort = (arr: number[]) => {
       sorted[nextSwapSpot + 1],
       sorted[nextSwapSpot]
     );
-    history.push(sorted);
+    history.push([...sorted]);
   }
 };
 

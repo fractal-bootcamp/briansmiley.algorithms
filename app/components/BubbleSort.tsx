@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from "react";
 import SortableBar from "./SortableBar";
 import bubbleSort from "../algorithms/bubbleSortFunc";
+import { SortVizProps } from "./Sorts";
 
-interface SortVizProps {
-  unsortedArray: number[];
-}
 export default function BubbleSort({ unsortedArray }: SortVizProps) {
   const solution = bubbleSort(unsortedArray);
   const [idx, setIdx] = useState(0);

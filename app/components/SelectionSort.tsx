@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from "react";
 import SortableBar from "./SortableBar";
 import selectionSort from "../algorithms/selectionSortFunc";
+import { SortVizProps } from "./Sorts";
 
-interface SortVizProps {
-  unsortedArray: number[];
-}
 export default function SelectionSort({ unsortedArray }: SortVizProps) {
   const solution = selectionSort(unsortedArray);
   const [idx, setIdx] = useState(0);

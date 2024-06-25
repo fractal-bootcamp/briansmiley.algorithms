@@ -1,29 +1,26 @@
 const selectionSort = (arr: number[]) => {
-  const sorted = [...arr];
-  const history: number[][] = [sorted];
-  arr.forEach((_, idx) => {
-    const mindex = sorted
-      .slice(idx)
-      .reduce(
-        (num, mindex, currentIndex) =>
-          num < sorted[mindex] ? currentIndex : mindex,
-        0
-      );
-    console.log(mindex);
-    if (mindex > idx) {
-      const swapSpot = mindex + idx;
-      const temp = sorted[swapSpot];
-      sorted[swapSpot] = sorted[idx];
-      sorted[idx] = temp;
-      history.push(sorted);
+  const sortedEventually = [...arr];
+  const history: number[][] = [[...sortedEventually]];
+
+  sortedEventually.forEach((elem, idx) => {
+    let mindex = idx; //initially set minimum to the current element
+    for (let i = idx + 1; i < sortedEventually.length; i++) {
+      if (sortedEventually[i] < sortedEventually[mindex]) mindex = i;
+    }
+    //swap current element with the mindex value
+    if (mindex !== idx) {
+      const temp = sortedEventually[idx];
+      sortedEventually[idx] = sortedEventually[mindex];
+      sortedEventually[mindex] = temp;
+      history.push([...sortedEventually]);
     }
   });
   return {
     originalArray: arr,
-    sortedArray: sorted,
+    sortedArray: sortedEventually,
     history: history
   };
 };
 
 export default selectionSort;
-console.log(selectionSort([5, 3, 5, 1, 1, 2, 4, 45, 1, 61, 24, 21, 15, 16]));
+// console.log(selectionSort([5, 3, 5, 1, 1, 2, 4, 45, 1, 61, 24, 21, 15, 16]));
