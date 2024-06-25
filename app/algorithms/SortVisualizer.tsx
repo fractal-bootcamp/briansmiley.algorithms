@@ -5,14 +5,11 @@ import { scrambled, isSorted } from "./utils";
 const sampleArray = Array.from({ length: 15 }, (_, idx) => idx);
 const scrambledArray = scrambled(sampleArray);
 interface SortVizProps {
-  sortFunc: (arr: number[]) => number[];
+  sortFunc: (arr: number[], callback: (arr: number[]) => void) => number[];
 }
 export default function SortViz({ sortFunc }: SortVizProps) {
   const [arr, setArr] = useState(scrambledArray);
-  useEffect(() => {
-    if (isSorted(arr)) return;
-    setTimeout(() => setArr(arr => sortFunc(arr)), 700);
-  }, [arr]);
+  useEffect(() => {}, []);
   return (
     <div className="flex justify-start items-end">
       {arr.map(val => (

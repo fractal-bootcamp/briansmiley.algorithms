@@ -1,13 +1,11 @@
 "use client";
 
-import SortViz from "./algorithms/SortViz";
-import bubbleSort from "./algorithms/bubblesort";
-import selSort from "./algorithms/selectionsort";
+import Sorts from "./components/Sorts";
+
 export default function Home() {
   return (
     <div>
-      <SortViz sortFunc={bubbleSort} />
-      <SortViz sortFunc={selSort} />
+      <Sorts />
     </div>
   );
 }
