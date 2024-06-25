@@ -5,12 +5,12 @@ import SortableBar from "./SortableBar";
 import selectionSort from "../algorithms/selectionSortFunc";
 import { SortVizProps } from "./Sorts";
 
-export default function SelectionSort({ unsortedArray }: SortVizProps) {
+export default function SelectionSort({ unsortedArray, tick }: SortVizProps) {
   const solution = selectionSort(unsortedArray);
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     if (idx === solution.history.length - 1) return;
-    setTimeout(() => setIdx(idx + 1), 1000);
+    setTimeout(() => setIdx(idx + 1), tick);
   }, [idx]);
   return (
     <div className="flex justify-start items-end">
