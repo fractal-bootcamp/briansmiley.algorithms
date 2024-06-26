@@ -3,6 +3,7 @@ export interface Snapshot {
   after: number[];
   leftChildren?: Snapshot;
   rightChildren?: Snapshot;
+  index?: number;
 }
 
 const mergeSort = (arr: number[]): Snapshot => {
@@ -37,6 +38,27 @@ const mergeSort = (arr: number[]): Snapshot => {
   };
 };
 
+/**Adds breadth first indexing to merge tree */
+export const indexMergeTree = (snapshot: Snapshot) => {
+  let count = 0;
+  const queue = [snapshot];
+  while (queue.length > 0) {
+    const node = queue.shift()!;
+    node.index = count++;
+    if (node.leftChildren) queue.push(node.leftChildren);
+    if (node.rightChildren) queue.push(node.rightChildren);
+  }
+  // console.log(snapshot);
+  return snapshot;
+};
 export default mergeSort;
 
-console.log(JSON.stringify(mergeSort([6, 34, 214, 52, 23]), undefined, 1));
+// console.log(
+//   JSON.stringify(
+//     indexMergeTree(
+//       mergeSort([1, 2, 5, 7, 5, 4, 12, 41, 12, 14, 16, 17, 345, 52, 23])
+//     ),
+//     undefined,
+//     1
+//   )
+// );

@@ -1,11 +1,11 @@
+"use client";
 import { scrambled } from "../algorithms/utils";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BubbleSort from "./BubbleSort";
 import InsertionSort from "./InsertionSort";
 import SelectionSort from "./SelectionSort";
 import MergeSort from "./MergeSort";
-const sampleArray = Array.from({ length: 15 }, (_, idx) => idx);
-const scrambledArray = scrambled(sampleArray);
+const sampleArray = Array.from({ length: 32 }, (_, idx) => idx + 1);
 export interface SortVizProps {
   unsortedArray: number[];
   tick: number;
@@ -17,11 +17,14 @@ const sorts = [
   { name: "Merge Sort", component: MergeSort }
 ];
 const Sorts = () => {
+  const [sortData, setSortData] = useState(() =>
+    scrambled(Array.from({ length: 32 }, (_, idx) => idx + 1))
+  );
   return (
-    <div>
+    <div className="bg-slate-400">
       {sorts.map(sort => (
         <div key={sort.name}>
-          <sort.component unsortedArray={scrambledArray} tick={1500} />
+          <sort.component unsortedArray={sortData} tick={150} />
           {sort.name}
         </div>
       ))}

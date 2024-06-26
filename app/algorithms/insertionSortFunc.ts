@@ -21,3 +21,55 @@ const insertionSort = (unsortedArray: number[]) => {
 };
 
 export default insertionSort;
+
+interface InsertionHistorySnapshot {
+  unsorted: number[];
+  sorting: number[];
+  comparing: [number, number];
+}
+export const insertionSort2 = (unsortedArray: number[]) => {
+  let src = [...unsortedArray];
+  let sortedArray: number[] = [];
+  const history: InsertionHistorySnapshot[] = [];
+  //repeatedly pop elements out of the original array an into the sorted array, swapping them over into place
+  while (src.length > 0) {
+    //take the first element from src and put it on sorted
+    sortedArray.push(src.shift()!);
+    //repeatedly swap until the entry to its left is smaller
+    let insertionIndex = sortedArray.length - 1;
+    history.push({
+      unsorted: [...src],
+      sorting: [...sortedArray],
+      comparing: [sortedArray[insertionIndex], sortedArray[insertionIndex - 1]]
+    });
+    while (
+      insertionIndex >= 0 &&
+      sortedArray[insertionIndex - 1] > sortedArray[insertionIndex]
+    ) {
+      [sortedArray[insertionIndex], sortedArray[insertionIndex - 1]] = [
+        sortedArray[insertionIndex - 1],
+        sortedArray[insertionIndex]
+      ];
+      //after each swap, push the state to history
+      insertionIndex--;
+      history.push({
+        unsorted: [...src],
+        sorting: [...sortedArray],
+        comparing: [
+          sortedArray[insertionIndex],
+          sortedArray[insertionIndex - 1]
+        ]
+      });
+    }
+  }
+  history.push({
+    unsorted: [...src],
+    sorting: [...sortedArray],
+    comparing: [-1, -1]
+  });
+  return {
+    originalArray: unsortedArray,
+    sortedArray: sortedArray,
+    history: history
+  };
+};
