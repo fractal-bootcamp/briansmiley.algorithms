@@ -6,27 +6,23 @@ import SortableBar from "./SortableBar";
 import insertionSort from "../algorithms/insertionSortFunc";
 import { SortVizProps } from "./Sorts";
 
-export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
+export default function InsertionSort({ unsortedArray, frame }: SortVizProps) {
   const solution = useMemo(() => insertionSort(unsortedArray), [unsortedArray]);
+  const historyFrame = Math.min(frame, solution.history.length - 1);
 
-  const [idx, setIdx] = useState(0);
-  useEffect(() => {
-    if (idx === solution.history.length - 1) return;
-    setTimeout(() => setIdx(idx + 1), tick);
-  }, [idx]);
   return (
     <div className="flex gap-5">
       <div className="flex">
         <div className="flex justify-start items-end">
-          {solution.history[idx].sorting.map((val, valIdx) => (
+          {solution.history[historyFrame].sorting.map((val, valIdx) => (
             <SortableBar
               height={val}
               max={Math.max(...unsortedArray)}
               arrayLength={solution.originalArray.length}
               color={
-                solution.history[idx].comparing?.includes(val)
+                solution.history[historyFrame].comparing?.includes(val)
                   ? "#969e00"
-                  : solution.history[idx].swapping?.includes(val)
+                  : solution.history[historyFrame].swapping?.includes(val)
                   ? "#f2ff00"
                   : "green"
               }
@@ -35,7 +31,7 @@ export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
           ))}
         </div>
         <div className="flex justify-start items-end">
-          {solution.history[idx].unsorted.map((val, unsortedIdx) => (
+          {solution.history[historyFrame].unsorted.map((val, unsortedIdx) => (
             <SortableBar
               height={val}
               max={Math.max(...unsortedArray)}
@@ -46,8 +42,8 @@ export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
         </div>
       </div>
       <div className="flex flex-col justify-center">
-        <div>Comparisons: {solution.history[idx].comparisons}</div>
-        <div>Swaps: {solution.history[idx].swaps}</div>
+        <div>Comparisons: {solution.history[historyFrame].comparisons}</div>
+        <div>Swaps: {solution.history[historyFrame].swaps}</div>
       </div>
     </div>
   );

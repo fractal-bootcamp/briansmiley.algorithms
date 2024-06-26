@@ -7,7 +7,7 @@ import mergeSort, {
 import SortableBar from "./SortableBar";
 import { SortVizProps } from "./Sorts";
 
-const MergeSort = ({ unsortedArray, tick }: SortVizProps) => {
+const MergeSort = ({ unsortedArray, frame }: SortVizProps) => {
   const solution = useMemo(
     () => indexMergeTree(mergeSort(unsortedArray)),
     [unsortedArray]
@@ -21,7 +21,7 @@ const MergeSort = ({ unsortedArray, tick }: SortVizProps) => {
     setTimeout(() => {
       const increment = sortFlag ? -1 : 1; //if sort flag is on, we are counting backwards as we walk up and sort/merge
       setDepth(depth + increment); //increase our depth tick
-    }, tick);
+    }, frame);
   }, [depth]);
 
   return (
