@@ -1,19 +1,47 @@
+interface HistorySnapshot {
+  unsorted: number[];
+  sorting: number[];
+  comparisons: number;
+  swaps: number;
+  comparing?: [number, number];
+  inserting?: number;
+}
 const selectionSort = (arr: number[]) => {
-  const sortedEventually = [...arr];
-  const history: number[][] = [[...sortedEventually]];
-
-  sortedEventually.forEach((elem, idx) => {
-    let mindex = idx; //initially set minimum to the current element
-    for (let i = idx + 1; i < sortedEventually.length; i++) {
-      if (sortedEventually[i] < sortedEventually[mindex]) mindex = i;
+  const sortedEventually: number[] = [];
+  const unsorted = [...arr];
+  let comparisons = 0;
+  let swaps = 0;
+  const history: HistorySnapshot[] = [];
+  while (sortedEventually.length < arr.length) {
+    let mindex = 0; //initially set minimum to the current element
+    for (let i = 1; i < unsorted.length; i++) {
+      history.push({
+        unsorted: [...unsorted],
+        sorting: [...sortedEventually],
+        comparisons: comparisons,
+        swaps: swaps,
+        comparing: [i, mindex]
+      });
+      comparisons++;
+      if (unsorted[i] < unsorted[mindex]) mindex = i;
     }
-    //swap current element with the mindex value
-    if (mindex !== idx) {
-      const temp = sortedEventually[idx];
-      sortedEventually[idx] = sortedEventually[mindex];
-      sortedEventually[mindex] = temp;
-      history.push([...sortedEventually]);
-    }
+    swaps++;
+    history.push({
+      unsorted: [...unsorted],
+      sorting: [...sortedEventually],
+      comparisons: comparisons,
+      swaps: swaps,
+      inserting: mindex
+    });
+    //pop out the mindex number and put it at the end of sorting array
+    sortedEventually.push(unsorted.splice(mindex, 1)[0]);
+  }
+  history.push({
+    unsorted: [...unsorted],
+    sorting: [...sortedEventually],
+    comparisons: comparisons,
+    swaps: swaps,
+    comparing: [-1, -1]
   });
   return {
     originalArray: arr,
