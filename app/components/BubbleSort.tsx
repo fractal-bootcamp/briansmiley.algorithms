@@ -20,9 +20,10 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
           <SortableBar
             height={val}
             color={
-              solution.history[idx].comparing.includes(val) ||
-              idx === solution.history.length - 1
+              idx >= history.length - 1
                 ? "green"
+                : solution.history[idx].comparing.includes(val)
+                ? "yellow"
                 : undefined
             }
             max={Math.max(...unsortedArray)}
