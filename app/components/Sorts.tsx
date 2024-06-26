@@ -52,7 +52,7 @@ const Sorts = () => {
         </div>
         <div className="flex justify-between items-end">
           <div
-            className="flex flex-col gap-1 w-fit"
+            className="flex flex-col gap-1"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
@@ -127,9 +127,9 @@ const HiddenSliderControl = ({
         {label}
       </button>
       {sliderViz && (
-        <div className="flex w-[35%] items-center gap-1">
+        <div className="flex items-center gap-1">
           <input
-            className="range range-xs w-[500px]"
+            className="range range-xs w-full "
             type="range"
             min={min}
             max={max}
