@@ -5,44 +5,20 @@ interface HistorySnapshot {
   comparisons: number;
   swaps: number;
 }
-// const createHistorySnapshot = (
-//   sorted: number[],
-//   comparisons: number,
-//   swaps: number
-// ) => ({ sorted: sorted, comparisons: comparisons, swaps: swaps });
-const bubbleSort = (arr: number[]) => {
-  const sorted = [...arr];
-  // const comparisons = 0;
-  const history: number[][] = [[...sorted]];
-  while (true) {
-    const nextSwapSpot = sorted.findIndex(
-      (val, idx, arr) => val > arr[idx + 1]
-    );
-    if (nextSwapSpot === -1)
-      return {
-        originalArray: arr,
-        sortedArray: sorted,
-        history: history
-      };
-    sorted.splice(
-      nextSwapSpot,
-      2,
-      sorted[nextSwapSpot + 1],
-      sorted[nextSwapSpot]
-    );
-    history.push([...sorted]);
-  }
-};
 
 interface BubbleHistory {
   array: number[];
   passes: number;
+  swaps: number;
+  comparisons: number;
   comparing: [number, number]; //indices of current comparison
 }
-export const bubbleSort2 = (arr: number[]) => {
+export const bubbleSort = (arr: number[]) => {
   const sorting = [...arr];
   let sorted = false;
   let passes = 0;
+  let comparisons = 0;
+  let swaps = 0;
   const history: BubbleHistory[] = [];
   while (!sorted) {
     let idx = 0;
@@ -52,13 +28,17 @@ export const bubbleSort2 = (arr: number[]) => {
     while (idx < sorting.length - passes) {
       //log current comparison in history
       //if element to the right is smaller, swap and set sorted to false
+      comparisons++;
       if (sorting[idx + 1] < sorting[idx]) {
         [sorting[idx], sorting[idx + 1]] = [sorting[idx + 1], sorting[idx]];
+        swaps++;
         sorted = false;
       }
       history.push({
         array: [...sorting],
         passes: passes,
+        comparisons: comparisons,
+        swaps: swaps,
         comparing: [sorting[idx], sorting[idx + 1]]
       });
       idx++;
