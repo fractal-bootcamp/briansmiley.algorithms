@@ -50,29 +50,42 @@ const Sorts = () => {
             <RotateCcw strokeWidth={2.25} />
           </div>
         </div>
-        <div
-          className="flex flex-col gap-1 w-fit"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          <HiddenSliderControl
-            label="Items"
-            max={256}
-            min={8}
-            stateSetter={(val: number) =>
-              setControls({ ...controls, arraySize: val, clock: 0 })
-            }
-            stateValue={controls.arraySize}
-            step={1}
-          />
-          <HiddenSliderControl
-            label="Speed"
-            max={500}
-            min={1}
-            stateSetter={setTick}
-            stateValue={tick}
-            step={1}
-          />
+        <div className="flex justify-between items-end">
+          <div
+            className="flex flex-col gap-1 w-fit"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            <HiddenSliderControl
+              label="Items"
+              max={256}
+              min={8}
+              stateSetter={(val: number) =>
+                setControls({ ...controls, arraySize: val, clock: 0 })
+              }
+              stateValue={controls.arraySize}
+              step={1}
+            />
+            <HiddenSliderControl
+              label="Speed"
+              max={500}
+              min={1}
+              stateSetter={setTick}
+              stateValue={tick}
+              step={1}
+            />
+          </div>
+          <div className="flex gap-3">
+            <div className="flex">
+              <div className="w-5 h-5 bg-[green]"></div>- Sorted
+            </div>
+            <div className="flex">
+              <div className="w-5 h-5 bg-[#969e00]"></div>- Comparing
+            </div>
+            <div className="flex">
+              <div className="w-5 h-5 bg-[#f2ff00]"></div>- Swapping
+            </div>
+          </div>
         </div>
         {sorts.map(sort => (
           <div className="bg-slate-400 rounded-xl p-2" key={sort.name}>
