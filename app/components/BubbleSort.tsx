@@ -14,7 +14,7 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
   }, [idx]);
 
   return (
-    <div className="flex">
+    <div className="flex gap-2">
       <div className="flex justify-start items-end">
         {solution.history[idx].array.map((val, valIdx) => (
           <div key={`bubbleSort${val}`}>
