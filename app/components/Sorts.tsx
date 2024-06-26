@@ -4,7 +4,7 @@ import BubbleSort from "./BubbleSort";
 import InsertionSort from "./InsertionSort";
 import SelectionSort from "./SelectionSort";
 import MergeSort from "./MergeSort";
-const sampleArray = Array.from({ length: 15 }, (_, idx) => idx);
+const sampleArray = Array.from({ length: 15 }, (_, idx) => idx + 1);
 const scrambledArray = scrambled(sampleArray);
 export interface SortVizProps {
   unsortedArray: number[];
@@ -21,7 +21,7 @@ const Sorts = () => {
     <div>
       {sorts.map(sort => (
         <div key={sort.name}>
-          <sort.component unsortedArray={scrambledArray} tick={1500} />
+          <sort.component unsortedArray={scrambledArray} tick={1000} />
           {sort.name}
         </div>
       ))}
