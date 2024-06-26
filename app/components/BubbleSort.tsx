@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import SortableBar from "./SortableBar";
 import bubbleSort from "../algorithms/bubbleSortFunc";
 import { SortVizProps } from "./Sorts";
@@ -8,6 +8,7 @@ import { SortVizProps } from "./Sorts";
 export default function BubbleSort({ unsortedArray, frame }: SortVizProps) {
   const solution = useMemo(() => bubbleSort(unsortedArray), [unsortedArray]);
   const historyFrame = Math.min(frame, solution.history.length - 1);
+
   return (
     <div className="flex gap-5">
       <div className="flex justify-start items-end">

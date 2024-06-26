@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import SortableBar from "./SortableBar";
 import selectionSort from "../algorithms/selectionSortFunc";
 import { SortVizProps } from "./Sorts";
