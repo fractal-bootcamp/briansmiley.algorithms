@@ -19,8 +19,9 @@ export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
         {solution.history[idx].map(val => (
           <SortableBar
             height={val}
-            max={solution.originalArray.length}
-            key={val}
+            max={Math.max(...unsortedArray)}
+            arrayLength={solution.originalArray.length}
+            key={`insertionSort${val}`}
           />
         ))}
       </div>
@@ -28,8 +29,9 @@ export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
         {solution.originalArray.slice(idx + 1).map(val => (
           <SortableBar
             height={val}
-            max={solution.originalArray.length}
-            key={val}
+            max={Math.max(...unsortedArray)}
+            arrayLength={solution.originalArray.length}
+            key={`insertionSort${val}`}
           />
         ))}
       </div>

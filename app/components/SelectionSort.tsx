@@ -17,8 +17,9 @@ export default function SelectionSort({ unsortedArray, tick }: SortVizProps) {
       {solution.history[idx].map(val => (
         <SortableBar
           height={val}
-          max={solution.originalArray.length}
-          key={val}
+          max={Math.max(...unsortedArray)}
+          arrayLength={solution.originalArray.length}
+          key={`selectionSort${val}`}
         />
       ))}
     </div>

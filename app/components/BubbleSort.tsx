@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import SortableBar from "./SortableBar";
 import bubbleSort from "../algorithms/bubbleSortFunc";
 import { SortVizProps } from "./Sorts";
@@ -15,11 +15,14 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
   return (
     <div className="flex justify-start items-end">
       {solution.history[idx].map(val => (
-        <SortableBar
-          height={val}
-          max={solution.originalArray.length}
-          key={val}
-        />
+        <div key={`bubbleSort${val}`}>
+          <SortableBar
+            height={val}
+            max={Math.max(...unsortedArray)}
+            arrayLength={unsortedArray.length}
+          />
+          {val}
+        </div>
       ))}
     </div>
   );

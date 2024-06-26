@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import mergeSort, {
   Snapshot,
@@ -11,10 +12,11 @@ const MergeSort = ({ unsortedArray, tick }: SortVizProps) => {
     indexMergeTree(mergeSort(unsortedArray))
   );
   const arrayMax = Math.max(...unsortedArray);
+  const totalLength = unsortedArray.length;
   const [depth, setDepth] = useState(0);
   const [sortFlag, setSortFlag] = useState(false);
   useEffect(() => {
-    if (depth === solution.before.length - 1) setSortFlag(true); //flip to whether we are splitting or sorting when we hit the last node
+    if (depth === solution.before.length - 2) setSortFlag(true); //flip to whether we are splitting or sorting when we hit the last node
     setTimeout(() => {
       const increment = sortFlag ? -1 : 1; //if sort flag is on, we are counting backwards as we walk up and sort/merge
       setDepth(depth + increment); //increase our depth tick
@@ -27,6 +29,7 @@ const MergeSort = ({ unsortedArray, tick }: SortVizProps) => {
       currentDepth={depth}
       sortFlag={sortFlag}
       arrayMax={arrayMax}
+      totalLength={totalLength}
     />
   );
 };
@@ -35,23 +38,30 @@ interface MergeSortMetaProps {
   currentDepth: number; //upticking render depth
   sortFlag: boolean; //whether we are sorting or splitting
   arrayMax: number; //size of largest entry; for display scaling
+  totalLength: number;
 }
 const MergeSortMeta = ({
   context,
   currentDepth,
   sortFlag,
-  arrayMax
+  arrayMax,
+  totalLength
 }: MergeSortMetaProps) => {
   const arrayToRender = sortFlag ? context.after : context.before;
   return (
     <div>
       {currentDepth > context.index! ? (
-        <div className="flex justify-start gap-2 items-end">
+        <div className="flex justify-start items-end">
           {/* If we are past a nodes index and it is a singleton, render it */}
           {context.after.length === 1 ? (
-            <div className="flex h-full justify-start items-end mx-2">
+            <div className="flex h-full justify-start items-end">
               {arrayToRender.map(val => (
-                <SortableBar height={val} max={arrayMax} key={val} />
+                <SortableBar
+                  height={val}
+                  max={arrayMax}
+                  arrayLength={totalLength}
+                  key={`mergeSort${val}`}
+                />
               ))}
             </div>
           ) : (
@@ -64,6 +74,7 @@ const MergeSortMeta = ({
               context={context.leftChildren}
               sortFlag={sortFlag}
               arrayMax={arrayMax}
+              totalLength={totalLength}
             />
           ) : (
             ""
@@ -74,15 +85,21 @@ const MergeSortMeta = ({
               context={context.rightChildren}
               sortFlag={sortFlag}
               arrayMax={arrayMax}
+              totalLength={totalLength}
             />
           ) : (
             ""
           )}
         </div>
       ) : (
-        <div className="flex h-full justify-start items-end mx-2">
+        <div className="flex h-full justify-start items-end mx-[5px]">
           {arrayToRender.map(val => (
-            <SortableBar height={val} max={arrayMax} key={val} />
+            <SortableBar
+              height={val}
+              arrayLength={totalLength}
+              max={arrayMax}
+              key={val}
+            />
           ))}
         </div>
       )}
