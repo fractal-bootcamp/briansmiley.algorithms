@@ -42,6 +42,10 @@ export default function SelectionSort({ unsortedArray, tick }: SortVizProps) {
           />
         ))}
       </div>
+      <div className="flex flex-col justify-center">
+        <div>Comparisons: {solution.history[idx].comparisons}</div>
+        <div>Swaps: {solution.history[idx].swaps}</div>
+      </div>
     </div>
   );
 }
