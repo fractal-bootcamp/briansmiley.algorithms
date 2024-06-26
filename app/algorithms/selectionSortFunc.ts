@@ -3,7 +3,8 @@ interface HistorySnapshot {
   sorting: number[];
   comparisons: number;
   swaps: number;
-  comparing: [number, number];
+  comparing?: [number, number];
+  inserting?: number;
 }
 const selectionSort = (arr: number[]) => {
   const sortedEventually: number[] = [];
@@ -24,9 +25,16 @@ const selectionSort = (arr: number[]) => {
       comparisons++;
       if (unsorted[i] < unsorted[mindex]) mindex = i;
     }
+    swaps++;
+    history.push({
+      unsorted: [...unsorted],
+      sorting: [...sortedEventually],
+      comparisons: comparisons,
+      swaps: swaps,
+      inserting: mindex
+    });
     //pop out the mindex number and put it at the end of sorting array
     sortedEventually.push(unsorted.splice(mindex, 1)[0]);
-    swaps++;
   }
   history.push({
     unsorted: [...unsorted],

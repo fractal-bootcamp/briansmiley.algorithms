@@ -1,35 +1,15 @@
-const insertionSort = (unsortedArray: number[]) => {
-  let sortedArray: number[] = [];
-  const intermediateSortedArrays: number[][] = [];
-  //loop through the unsorted array and insert its elements into a sorted one
-  unsortedArray.forEach(elem => {
-    //find index of first element in sorted array larger than current element
-    //if no sorted elements are larger, default to last index
-    let insertionIndex = sortedArray.findIndex(sortedNum => sortedNum >= elem);
-    if (insertionIndex === -1) insertionIndex = sortedArray.length;
-    //place the element at the appropriate index
-    sortedArray.splice(insertionIndex, 0, elem);
-
-    //Add the sort step to the sortedArray history
-    intermediateSortedArrays.push([...sortedArray]);
-  });
-  return {
-    originalArray: unsortedArray,
-    sortedArray: sortedArray,
-    history: intermediateSortedArrays
-  };
-};
-
-export default insertionSort;
-
 interface InsertionHistorySnapshot {
   unsorted: number[];
   sorting: number[];
-  comparing: [number, number];
+  comparisons: number;
+  swaps: number;
+  comparing?: [number, number];
+  swapping?: [number, number];
 }
-export const insertionSort2 = (unsortedArray: number[]) => {
+export const insertionSort = (unsortedArray: number[]) => {
   let src = [...unsortedArray];
   let sortedArray: number[] = [];
+  let [swaps, comparisons] = [0, 0];
   const history: InsertionHistorySnapshot[] = [];
   //repeatedly pop elements out of the original array an into the sorted array, swapping them over into place
   while (src.length > 0) {
@@ -37,33 +17,42 @@ export const insertionSort2 = (unsortedArray: number[]) => {
     sortedArray.push(src.shift()!);
     //repeatedly swap until the entry to its left is smaller
     let insertionIndex = sortedArray.length - 1;
-    history.push({
-      unsorted: [...src],
-      sorting: [...sortedArray],
-      comparing: [sortedArray[insertionIndex], sortedArray[insertionIndex - 1]]
-    });
+
     while (
       insertionIndex >= 0 &&
       sortedArray[insertionIndex - 1] > sortedArray[insertionIndex]
     ) {
+      comparisons++;
+      history.push({
+        unsorted: [...src],
+        sorting: [...sortedArray],
+        comparisons: comparisons,
+        swaps: swaps,
+        comparing: [
+          sortedArray[insertionIndex],
+          sortedArray[insertionIndex - 1]
+        ]
+      });
       [sortedArray[insertionIndex], sortedArray[insertionIndex - 1]] = [
         sortedArray[insertionIndex - 1],
         sortedArray[insertionIndex]
       ];
       //after each swap, push the state to history
       insertionIndex--;
-      history.push({
-        unsorted: [...src],
-        sorting: [...sortedArray],
-        comparing: [
-          sortedArray[insertionIndex],
-          sortedArray[insertionIndex - 1]
-        ]
-      });
     }
+    swaps++;
+    history.push({
+      unsorted: [...src],
+      sorting: [...sortedArray],
+      comparisons: comparisons,
+      swaps: swaps,
+      swapping: [sortedArray[insertionIndex], sortedArray[insertionIndex - 1]]
+    });
   }
   history.push({
     unsorted: [...src],
+    comparisons: comparisons,
+    swaps: swaps,
     sorting: [...sortedArray],
     comparing: [-1, -1]
   });
@@ -73,3 +62,4 @@ export const insertionSort2 = (unsortedArray: number[]) => {
     history: history
   };
 };
+export default insertionSort;

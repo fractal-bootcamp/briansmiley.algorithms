@@ -11,7 +11,8 @@ interface BubbleHistory {
   passes: number;
   swaps: number;
   comparisons: number;
-  comparing: [number, number]; //indices of current comparison
+  comparing?: [number, number]; //indices of current comparison
+  swapping?: [number, number];
 }
 export const bubbleSort = (arr: number[]) => {
   const sorting = [...arr];
@@ -29,11 +30,6 @@ export const bubbleSort = (arr: number[]) => {
       //log current comparison in history
       //if element to the right is smaller, swap and set sorted to false
       comparisons++;
-      if (sorting[idx + 1] < sorting[idx]) {
-        [sorting[idx], sorting[idx + 1]] = [sorting[idx + 1], sorting[idx]];
-        swaps++;
-        sorted = false;
-      }
       history.push({
         array: [...sorting],
         passes: passes,
@@ -41,6 +37,18 @@ export const bubbleSort = (arr: number[]) => {
         swaps: swaps,
         comparing: [sorting[idx], sorting[idx + 1]]
       });
+      if (sorting[idx + 1] < sorting[idx]) {
+        [sorting[idx], sorting[idx + 1]] = [sorting[idx + 1], sorting[idx]];
+        swaps++;
+        sorted = false;
+        history.push({
+          array: [...sorting],
+          passes: passes,
+          comparisons: comparisons,
+          swaps: swaps,
+          swapping: [sorting[idx], sorting[idx + 1]]
+        });
+      }
       idx++;
     }
   }

@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { scrambled, isSorted } from "../algorithms/utils";
 import SortableBar from "./SortableBar";
-import { insertionSort2 } from "../algorithms/insertionSortFunc";
+import insertionSort from "../algorithms/insertionSortFunc";
 import { SortVizProps } from "./Sorts";
 
 export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
-  const solution = insertionSort2(unsortedArray);
+  const solution = insertionSort(unsortedArray);
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     if (idx === solution.history.length - 1) return;
@@ -22,7 +22,11 @@ export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
             max={Math.max(...unsortedArray)}
             arrayLength={solution.originalArray.length}
             color={
-              solution.history[idx].comparing.includes(val) ? "yellow" : "green"
+              solution.history[idx].comparing?.includes(val)
+                ? "#969e00"
+                : solution.history[idx].swapping?.includes(val)
+                ? "#f2ff00"
+                : "green"
             }
             key={`insertionSort${val}`}
           />
@@ -37,6 +41,10 @@ export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
             key={`insertionSort${val}`}
           />
         ))}
+      </div>
+      <div className="flex flex-col justify-center">
+        <div>Comparisons: {solution.history[idx].comparisons}</div>
+        <div>Swaps: {solution.history[idx].swaps}</div>
       </div>
     </div>
   );

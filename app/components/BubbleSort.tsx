@@ -12,7 +12,6 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
     if (idx === solution.history.length - 1) return;
     setTimeout(() => setIdx(idx + 1), tick);
   }, [idx]);
-
   return (
     <div className="flex gap-2">
       <div className="flex justify-start items-end">
@@ -25,8 +24,10 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
                 valIdx >
                   solution.originalArray.length - solution.history[idx].passes
                   ? "green"
-                  : solution.history[idx].comparing.includes(val)
-                  ? "yellow"
+                  : solution.history[idx].comparing?.includes(val)
+                  ? "#969e00"
+                  : solution.history[idx].swapping?.includes(val)
+                  ? "#f2ff00"
                   : undefined
               }
               max={Math.max(...unsortedArray)}

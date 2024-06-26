@@ -31,10 +31,12 @@ export default function SelectionSort({ unsortedArray, tick }: SortVizProps) {
             height={val}
             max={Math.max(...unsortedArray)}
             color={
-              solution.history[idx].comparing[1] === unsortedIdx
+              solution.history[idx].comparing?.[1] === unsortedIdx
                 ? "green"
-                : solution.history[idx].comparing[0] === unsortedIdx
-                ? "yellow"
+                : solution.history[idx].comparing?.[0] === unsortedIdx
+                ? "#969e00"
+                : solution.history[idx].inserting === unsortedIdx
+                ? "#f2ff00"
                 : undefined
             }
             arrayLength={solution.originalArray.length}

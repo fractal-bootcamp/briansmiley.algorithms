@@ -23,7 +23,7 @@ const Sorts = () => {
     <div className="bg-slate-400">
       {sorts.map(sort => (
         <div key={sort.name}>
-          <sort.component unsortedArray={sortData} tick={20} />
+          <sort.component unsortedArray={sortData} tick={25} />
           {sort.name}
         </div>
       ))}
