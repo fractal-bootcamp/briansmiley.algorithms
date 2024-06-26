@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { scrambled, isSorted } from "../algorithms/utils";
 import SortableBar from "./SortableBar";
 import insertionSort from "../algorithms/insertionSortFunc";
 import { SortVizProps } from "./Sorts";
 
 export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
-  const solution = insertionSort(unsortedArray);
+  const solution = useMemo(() => insertionSort(unsortedArray), [unsortedArray]);
+
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     if (idx === solution.history.length - 1) return;

@@ -17,14 +17,14 @@ const sorts = [
 ];
 const Sorts = () => {
   const [sortData, setSortData] = useState(() =>
-    scrambled(Array.from({ length: 32 }, (_, idx) => idx + 1))
+    scrambled(Array.from({ length: 128 }, (_, idx) => idx + 1))
   );
   return (
     <div className="bg-slate-400">
       {sorts.map(sort => (
         <div key={sort.name}>
+          {sort.name}:
           <sort.component unsortedArray={sortData} tick={25} />
-          {sort.name}
         </div>
       ))}
     </div>

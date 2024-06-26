@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import mergeSort, {
   Snapshot,
   indexMergeTree
@@ -8,8 +8,9 @@ import SortableBar from "./SortableBar";
 import { SortVizProps } from "./Sorts";
 
 const MergeSort = ({ unsortedArray, tick }: SortVizProps) => {
-  const [solution, setSolution] = useState(
-    indexMergeTree(mergeSort(unsortedArray))
+  const solution = useMemo(
+    () => indexMergeTree(mergeSort(unsortedArray)),
+    [unsortedArray]
   );
   const arrayMax = Math.max(...unsortedArray);
   const totalLength = unsortedArray.length;

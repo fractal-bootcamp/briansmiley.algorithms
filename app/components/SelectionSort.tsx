@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import SortableBar from "./SortableBar";
 import selectionSort from "../algorithms/selectionSortFunc";
 import { SortVizProps } from "./Sorts";
 
 export default function SelectionSort({ unsortedArray, tick }: SortVizProps) {
-  const solution = selectionSort(unsortedArray);
+  const solution = useMemo(() => selectionSort(unsortedArray), []);
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     if (idx === solution.history.length - 1) return;

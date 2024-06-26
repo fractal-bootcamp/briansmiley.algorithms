@@ -1,12 +1,12 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { use, useEffect, useMemo, useState } from "react";
 import SortableBar from "./SortableBar";
 import bubbleSort from "../algorithms/bubbleSortFunc";
 import { SortVizProps } from "./Sorts";
 
 export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
-  const solution = bubbleSort(unsortedArray);
+  const solution = useMemo(() => bubbleSort(unsortedArray), [unsortedArray]);
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     if (idx === solution.history.length - 1) return;
