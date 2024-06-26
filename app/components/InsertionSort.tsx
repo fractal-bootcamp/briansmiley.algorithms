@@ -20,9 +20,9 @@ export default function InsertionSort({ unsortedArray, frame }: SortVizProps) {
               max={Math.max(...unsortedArray)}
               arrayLength={solution.originalArray.length}
               color={
-                solution.history[historyFrame].comparing?.includes(val)
+                solution.history[historyFrame].comparing?.includes(valIdx)
                   ? "#969e00"
-                  : solution.history[historyFrame].swapping?.includes(val)
+                  : solution.history[historyFrame].swapping?.includes(valIdx)
                   ? "#f2ff00"
                   : "green"
               }

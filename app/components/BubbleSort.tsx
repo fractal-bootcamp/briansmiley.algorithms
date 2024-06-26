@@ -21,9 +21,9 @@ export default function BubbleSort({ unsortedArray, frame }: SortVizProps) {
                   solution.originalArray.length -
                     solution.history[historyFrame].passes
                   ? "green"
-                  : solution.history[historyFrame].comparing?.includes(val)
+                  : solution.history[historyFrame].comparing?.includes(valIdx)
                   ? "#969e00"
-                  : solution.history[historyFrame].swapping?.includes(val)
+                  : solution.history[historyFrame].swapping?.includes(valIdx)
                   ? "#f2ff00"
                   : undefined
               }

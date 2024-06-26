@@ -28,10 +28,7 @@ export const insertionSort = (unsortedArray: number[]) => {
         sorting: [...sortedArray],
         comparisons: comparisons,
         swaps: swaps,
-        comparing: [
-          sortedArray[insertionIndex],
-          sortedArray[insertionIndex - 1]
-        ]
+        comparing: [insertionIndex, insertionIndex - 1]
       });
       [sortedArray[insertionIndex], sortedArray[insertionIndex - 1]] = [
         sortedArray[insertionIndex - 1],
@@ -46,15 +43,14 @@ export const insertionSort = (unsortedArray: number[]) => {
       sorting: [...sortedArray],
       comparisons: comparisons,
       swaps: swaps,
-      swapping: [sortedArray[insertionIndex], sortedArray[insertionIndex - 1]]
+      swapping: [insertionIndex, insertionIndex - 1]
     });
   }
   history.push({
     unsorted: [...src],
     comparisons: comparisons,
     swaps: swaps,
-    sorting: [...sortedArray],
-    comparing: [-1, -1]
+    sorting: [...sortedArray]
   });
   return {
     originalArray: unsortedArray,
