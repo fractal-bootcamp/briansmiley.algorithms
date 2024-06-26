@@ -15,12 +15,14 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
 
   return (
     <div className="flex justify-start items-end">
-      {solution.history[idx].array.map(val => (
+      {solution.history[idx].array.map((val, valIdx) => (
         <div key={`bubbleSort${val}`}>
           <SortableBar
             height={val}
             color={
-              idx >= history.length - 1
+              idx >= solution.history.length - 1 ||
+              valIdx >
+                solution.originalArray.length - solution.history[idx].passes
                 ? "green"
                 : solution.history[idx].comparing.includes(val)
                 ? "yellow"

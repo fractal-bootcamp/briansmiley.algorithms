@@ -36,27 +36,31 @@ const bubbleSort = (arr: number[]) => {
 
 interface BubbleHistory {
   array: number[];
+  passes: number;
   comparing: [number, number]; //indices of current comparison
 }
 export const bubbleSort2 = (arr: number[]) => {
   const sorting = [...arr];
   let sorted = false;
+  let passes = 0;
   const history: BubbleHistory[] = [];
   while (!sorted) {
     let idx = 0;
+    passes++;
     sorted = true; //set sorted to true, to be reflagged false if we encounter any swaps
     //go through whole array and make swaps
-    while (idx < sorting.length - 1) {
+    while (idx < sorting.length - passes) {
       //log current comparison in history
-      history.push({
-        array: [...sorting],
-        comparing: [sorting[idx], sorting[idx + 1]]
-      });
       //if element to the right is smaller, swap and set sorted to false
       if (sorting[idx + 1] < sorting[idx]) {
         [sorting[idx], sorting[idx + 1]] = [sorting[idx + 1], sorting[idx]];
         sorted = false;
       }
+      history.push({
+        array: [...sorting],
+        passes: passes,
+        comparing: [sorting[idx], sorting[idx + 1]]
+      });
       idx++;
     }
   }
