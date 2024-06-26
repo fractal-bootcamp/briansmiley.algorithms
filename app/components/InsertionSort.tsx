@@ -16,32 +16,34 @@ export default function InsertionSort({ unsortedArray, tick }: SortVizProps) {
   }, [idx]);
   return (
     <div className="flex gap-5">
-      <div className="flex justify-start items-end">
-        {solution.history[idx].sorting.map(val => (
-          <SortableBar
-            height={val}
-            max={Math.max(...unsortedArray)}
-            arrayLength={solution.originalArray.length}
-            color={
-              solution.history[idx].comparing?.includes(val)
-                ? "#969e00"
-                : solution.history[idx].swapping?.includes(val)
-                ? "#f2ff00"
-                : "green"
-            }
-            key={`insertionSort${val}`}
-          />
-        ))}
-      </div>
-      <div className="flex justify-start items-end">
-        {solution.history[idx].unsorted.map(val => (
-          <SortableBar
-            height={val}
-            max={Math.max(...unsortedArray)}
-            arrayLength={solution.originalArray.length}
-            key={`insertionSort${val}`}
-          />
-        ))}
+      <div className="flex">
+        <div className="flex justify-start items-end">
+          {solution.history[idx].sorting.map((val, valIdx) => (
+            <SortableBar
+              height={val}
+              max={Math.max(...unsortedArray)}
+              arrayLength={solution.originalArray.length}
+              color={
+                solution.history[idx].comparing?.includes(val)
+                  ? "#969e00"
+                  : solution.history[idx].swapping?.includes(val)
+                  ? "#f2ff00"
+                  : "green"
+              }
+              key={`insertionSort${valIdx}`}
+            />
+          ))}
+        </div>
+        <div className="flex justify-start items-end">
+          {solution.history[idx].unsorted.map((val, unsortedIdx) => (
+            <SortableBar
+              height={val}
+              max={Math.max(...unsortedArray)}
+              arrayLength={solution.originalArray.length}
+              key={`insertionSort${unsortedIdx}`}
+            />
+          ))}
+        </div>
       </div>
       <div className="flex flex-col justify-center">
         <div>Comparisons: {solution.history[idx].comparisons}</div>

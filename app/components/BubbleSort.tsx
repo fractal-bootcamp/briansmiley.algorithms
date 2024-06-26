@@ -13,10 +13,10 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
     setTimeout(() => setIdx(idx + 1), tick);
   }, [idx]);
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-5">
       <div className="flex justify-start items-end">
         {solution.history[idx].array.map((val, valIdx) => (
-          <div key={`bubbleSort${val}`}>
+          <div key={`bubbleSort${valIdx}`}>
             <SortableBar
               height={val}
               color={
@@ -33,7 +33,6 @@ export default function BubbleSort({ unsortedArray, tick }: SortVizProps) {
               max={Math.max(...unsortedArray)}
               arrayLength={unsortedArray.length}
             />
-            {val}
           </div>
         ))}
       </div>

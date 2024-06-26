@@ -17,16 +17,19 @@ const sorts = [
 ];
 const Sorts = () => {
   const [sortData, setSortData] = useState(() =>
-    scrambled(Array.from({ length: 128 }, (_, idx) => idx + 1))
+    scrambled(Array.from({ length: 64 }, (_, idx) => idx + 1))
   );
   return (
-    <div className="bg-slate-400">
-      {sorts.map(sort => (
-        <div key={sort.name}>
-          {sort.name}:
-          <sort.component unsortedArray={sortData} tick={25} />
-        </div>
-      ))}
+    <div className="bg-slate-200 flex flex-col gap-3 rounded-xl m-2 p-2">
+      <div className="mx-2 flex flex-col gap-2">
+        <h1 className="text-xl font-bold">Sorting</h1>
+        {sorts.map(sort => (
+          <div className="bg-slate-400 rounded-xl p-2" key={sort.name}>
+            {sort.name}:
+            <sort.component unsortedArray={sortData} tick={0} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
