@@ -5,7 +5,7 @@ import BubbleSort from "./BubbleSort";
 import InsertionSort from "./InsertionSort";
 import SelectionSort from "./SelectionSort";
 import MergeSort from "./MergeSort";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, Play, Pause } from "lucide-react";
 export interface SortVizProps {
   unsortedArray: number[];
   frame: number;
@@ -19,7 +19,7 @@ const sorts = [
 const Sorts = () => {
   const [controls, setControls] = useState({ arraySize: 64, clock: 0 });
   const [tick, setTick] = useState(50);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true);
   useEffect(() => {
     const timeout = setTimeout(
       () =>
@@ -31,23 +31,36 @@ const Sorts = () => {
     );
     return () => clearTimeout(timeout);
   }, [controls.clock, paused]);
-  const sortData = useMemo(
-    () =>
-      scrambled(
-        Array.from({ length: controls.arraySize }, (_, idx) => idx + 1)
-      ),
-    [controls.arraySize]
-  );
+  const sortData = useMemo(() => {
+    console.log("memoing sortdata");
+    return scrambled(
+      Array.from({ length: controls.arraySize }, (_, idx) => idx + 1)
+    );
+  }, [controls.arraySize]);
   return (
     <div className="bg-slate-200 flex flex-col gap-3 rounded-xl m-2 p-2">
       <div className="mx-2 flex flex-col gap-2">
         <div className="flex justify-between">
           <h1 className="text-xl font-bold">Sorting</h1>
-          <div
-            className="hover:bg-slate-300 hover:cursor-pointer rounded-full w-fit p-2"
-            onClick={() => setControls({ ...controls, clock: 0 })}
-          >
-            <RotateCcw strokeWidth={2.25} />
+          <div className="flex">
+            <div
+              className="hover:bg-slate-300 hover:cursor-pointer rounded-full w-fit p-2"
+              onClick={() => setPaused(false)}
+            >
+              <Play strokeWidth={2.25} />
+            </div>
+            <div
+              className="hover:bg-slate-300 hover:cursor-pointer rounded-full w-fit p-2"
+              onClick={() => setPaused(true)}
+            >
+              <Pause strokeWidth={2.25} />
+            </div>
+            <div
+              className="hover:bg-slate-300 hover:cursor-pointer rounded-full w-fit p-2"
+              onClick={() => setControls({ ...controls, clock: 0 })}
+            >
+              <RotateCcw strokeWidth={2.25} />
+            </div>
           </div>
         </div>
         <div className="flex justify-between items-end">
