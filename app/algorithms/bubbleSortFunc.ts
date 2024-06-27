@@ -35,7 +35,7 @@ export const bubbleSort = (arr: number[]) => {
         passes: passes,
         comparisons: comparisons,
         swaps: swaps,
-        comparing: [sorting[idx], sorting[idx + 1]]
+        comparing: [idx, idx + 1]
       });
       if (sorting[idx + 1] < sorting[idx]) {
         [sorting[idx], sorting[idx + 1]] = [sorting[idx + 1], sorting[idx]];
@@ -46,7 +46,7 @@ export const bubbleSort = (arr: number[]) => {
           passes: passes,
           comparisons: comparisons,
           swaps: swaps,
-          swapping: [sorting[idx], sorting[idx + 1]]
+          swapping: [idx, idx + 1]
         });
       }
       idx++;
