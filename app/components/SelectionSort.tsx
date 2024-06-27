@@ -19,7 +19,7 @@ export default function SelectionSort({ unsortedArray, frame }: SortVizProps) {
               max={Math.max(...unsortedArray)}
               arrayLength={solution.originalArray.length}
               color={"green"}
-              key={`selectionSort${valIdx}`}
+              key={`selectionSortSorted${valIdx}`}
             />
           ))}
         </div>
@@ -36,7 +36,7 @@ export default function SelectionSort({ unsortedArray, frame }: SortVizProps) {
                   : undefined
               }
               arrayLength={solution.originalArray.length}
-              key={`selectionSort${unsortedIdx}`}
+              key={`selectionSortUnsorted${unsortedIdx}`}
             />
           ))}
         </div>
